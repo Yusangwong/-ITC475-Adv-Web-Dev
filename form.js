@@ -140,7 +140,7 @@ class BasicForm extends React.Component {
             ),
             React.createElement(
                 "option",
-                { value: "new_maldives" },
+                { value: "maldives" },
                 "Maldives, South Asia"
             ),
             React.createElement(
