@@ -26,7 +26,7 @@ class BasicForm extends React.Component {
     this.setState({city: event.target.value});
 		const testing = city.value;
 	if(testing == "new_zealand"){
-	alert("City Tours, Sports, Cycling, Museums, Boating");
+	alert("Please select your activities");
 	$( "#1" ).show();
 	$( "#2" ).show();
 	$( "#3" ).show();
@@ -40,21 +40,21 @@ class BasicForm extends React.Component {
 	$( "#11" ).show();
 	}
 	else if(testing == "maldives"){
-	alert("Museums, Sailing, Beach, Hiking, Boating");
+	alert("Please select your activities");
 	$( "#1" ).hide();
 	$( "#2" ).hide();
 	$( "#3" ).show();
 	$( "#4" ).show();
 	$( "#5" ).show();
 	$( "#6" ).show();
-	$( "#7" ).hide();
+	$( "#7" ).show();
 	$( "#8" ).hide();
 	$( "#9" ).hide();
 	$( "#10" ).hide();
 	$( "#11" ).hide();
 	}
 	else if(testing == "venice"){
-	alert("Museums, Theatre, Parks and Recreation, City Tours");
+	alert("Please select your activities");
 	$( "#1" ).show();
 	$( "#2" ).hide();
 	$( "#3" ).show();
@@ -68,7 +68,7 @@ class BasicForm extends React.Component {
 	$( "#11" ).hide();
 	}
 	else if(testing == "cancun"){
-	alert("Parks and Recreation, Beaches, Boating, Snorkeling");
+	alert("Please select your activities");
 	$( "#1" ).hide();
 	$( "#2" ).hide();
 	$( "#3" ).hide();
