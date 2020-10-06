@@ -24,6 +24,20 @@ class BasicForm extends React.Component {
   
    handleCityChange = (event) => {
     this.setState({city: event.target.value});
+	const testing = city.value;
+	if(testing == "new_zealand"){
+	alert("City Tours, Sports, Cycling, Museums, Boating");
+	}
+	else if(testing == "maldives"){
+	alert("Museums, Sailing, Beach, Hiking, Boating");
+	}
+	else if(testing == "venice"){
+	alert("Museums, Theatre, Parks and Recreation, City Tours");
+	}
+	else if(testing == "cancun"){
+	alert("Parks and Recreation, Beaches, Boating, Snorkeling");
+	}
+	
   }
 
   handleActivitiesChange = (event) => {
@@ -43,69 +57,67 @@ class BasicForm extends React.Component {
   render() {
 
     return React.createElement(
-	"form",
-	{ onSubmit: this.handleSubmit },
-	React.createElement(
-		"div",
-		{ className: "form-group" },
-		React.createElement(
-			"label",
-			{ htmlFor: "name" },
-			"Name"
-		),
-		React.createElement("input", { name: "name", className: "form-control", id: "name", placeholder: "Enter name", value: this.state.name, onChange: this.handleNameChange })
-	),
-	React.createElement(
-		"div",
-		{ className: "form-group" },
-		React.createElement(
-			"label",
-			{ htmlFor: "email" },
-			"Email"
-		),
-		React.createElement("input", { name: "email", className: "form-control", id: "email", placeholder: "Enter email", value: this.state.email, onChange: this.handleEmailChange })
-	),
-	React.createElement(
-		"div",
-		{ className: "form-group" },
-		React.createElement(
-			"label",
-			{ htmlFor: "city" },
-			"City"
-		),
-		React.createElement(
-			"select",
-			{ name: "cars", className: "form-control", id: "city", placeholder: "Enter city", value: this.state.city, onChange: this.handleCityChange },
-			React.createElement(
-				"option",
-				{ value: "new_zealand" },
-				"New Zealand"
-			),
-			React.createElement(
-				"option",
-				{ value: "new_maldives" },
-				"Maldives, South Asia"
-			),
-			React.createElement(
-				"option",
-				{ value: "venice" },
-				"Venice, Italy"
-			),
-			React.createElement(
-				"option",
-				{ value: "cancun" },
-				"Cancun"
-			)
-		)
-	),
-	React.createElement(
-		"button",
-		{ type: "submit", className: "btn btn-success btn-block" },
-		"Submit"
-	)
+    "form",
+    { onSubmit: this.handleSubmit },
+    React.createElement(
+        "div",
+        { className: "form-group" },
+        React.createElement(
+            "label",
+            { htmlFor: "name" },
+            "Name"
+        ),
+        React.createElement("input", { name: "name", className: "form-control", id: "name", placeholder: "Enter name", value: this.state.name, onChange: this.handleNameChange })
+    ),
+    React.createElement(
+        "div",
+        { className: "form-group" },
+        React.createElement(
+            "label",
+            { htmlFor: "email" },
+            "Email"
+        ),
+        React.createElement("input", { name: "email", className: "form-control", id: "email", placeholder: "Enter email", value: this.state.email, onChange: this.handleEmailChange })
+    ),
+    React.createElement(
+        "div",
+        { className: "form-group" },
+        React.createElement(
+            "label",
+            { htmlFor: "city" },
+            "City"
+        ),
+        React.createElement(
+            "select",
+            { name: "cars", className: "form-control", id: "city", placeholder: "Enter city", value: this.state.city, onChange: this.handleCityChange },
+            React.createElement(
+                "option",
+                { value: "new_zealand" },
+                "New Zealand"
+            ),
+            React.createElement(
+                "option",
+                { value: "maldives" },
+                "Maldives, South Asia"
+            ),
+            React.createElement(
+                "option",
+                { value: "venice" },
+                "Venice, Italy"
+            ),
+            React.createElement(
+                "option",
+                { value: "cancun" },
+                "Cancun"
+            )
+        )
+    ),
+    React.createElement(
+        "button",
+        { type: "submit", className: "btn btn-success btn-block" },
+        "Submit"
+    )
 );
-
-
 
 
   }
