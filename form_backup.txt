@@ -1,0 +1,22 @@
+<form onSubmit={this.handleSubmit}>
+    <div className="form-group">
+        <label htmlFor="name">Name</label>
+        <input name="name" className="form-control" id="name" placeholder="Enter name" value={this.state.name} onChange={this.handleNameChange} />
+    </div>
+    <div className="form-group">
+        <label htmlFor="email">Email</label>
+        <input name="email" className="form-control" id="email" placeholder="Enter email" value={this.state.email} onChange={this.handleEmailChange} />
+    </div>
+    <div className="form-group">
+        <label htmlFor="city">City</label>
+        <select name="cars" className="form-control" id="city" placeholder="Enter city" value={this.state.city} onChange={this.handleCityChange} >
+            <option value="new_zealand">New Zealand</option>
+            <option value="new_maldives">Maldives, South Asia</option>
+            <option value="venice">Venice, Italy</option>
+            <option value="cancun">Cancun</option>
+        </select>
+    </div>
+
+
+    <button type="submit" className="btn btn-success btn-block">Submit</button>
+</form>
