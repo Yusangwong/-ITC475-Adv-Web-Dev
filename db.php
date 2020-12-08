@@ -11,7 +11,7 @@ $servername = "127.0.0.1";
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-    
+
 
 
 		$sql = "INSERT INTO reservation (name,email,phone,city,activities,numofppl,date)

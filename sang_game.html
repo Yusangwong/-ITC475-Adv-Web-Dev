@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+body{
+	background-color: #E0E0E0;
+}
+canvas {
+	margin: 50px;
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+p{
+	margin-left: 50px;
+}
+button {
+	margin-top: 20px;
+	margin-left: 50px;
+}
+</style>
+</head>
+<body onload="startGame()">
+<script>
+
+var myGamePiece;
+var myObstacles = [];
+var myScore;
+var gameover = false;
+var music = new Audio('Jazz_music.mp3');
+
+function startGame() {
+	$("#myform").hide();
+    myGamePiece = new component(30, 30, "image/angry.gif", 300, 200, "image");
+    myScore = new component("30px", "Consolas", "red", 280, 40, "text");	
+    myBackground = new component(700, 500, "image/win_xp.jpg", 0, 0, "image");
+	music.play();
+    myGameArea.start();
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 700;
+        this.canvas.height = 500;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 20);
+		window.addEventListener('keydown', function (e) {
+            myGameArea.key = e.keyCode;
+        })
+        window.addEventListener('keyup', function (e) {
+            myGameArea.key = false;
+        })
+        },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop : function() {
+        clearInterval(this.interval);
+    }
+}
+
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    this.score = 0;
+	if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+    }
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.x = x;
+    this.y = y;
+    this.gravity = 0;
+    this.gravitySpeed = 0;
+    this.update = function() {
+        ctx = myGameArea.context;
+        if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        } 
+		else if(type == "image") {
+            ctx.drawImage(this.image, 
+                this.x, 
+                this.y,
+                this.width, this.height);
+		}
+		else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+    this.newPos = function() {
+        this.x += this.speedX;
+        this.y += this.speedY;        
+    }    
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright )) {
+			if (mybottom < 500 ){
+			crash = false;
+			}
+		}
+		if (mytop < 0){
+		gameover = true;
+		}
+        return crash;
+    }
+}
+
+function updateGameArea() {
+    var x, width, gap, minWidth, maxWidth, minGap, maxGap;
+    myGameArea.clear();
+	myBackground.newPos();
+    myBackground.update();
+	myGamePiece.speedX = 0;
+    myGamePiece.speedY = 2;    
+    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -6; }
+    if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 6; }
+    myGameArea.frameNo += 1;
+    if (myGameArea.frameNo == 1 || everyinterval(70)) {
+        y = myGameArea.canvas.width;
+		x = myGameArea.canvas.height;
+        minWidth = 20;
+        maxWidth = 580;
+        width = Math.floor(Math.random()*(maxWidth- minWidth + 1) + minWidth);
+        minGap = 50;
+        maxGap = 100;
+        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        myObstacles.push(new component(width,10,  "black", 0, x));
+        myObstacles.push(new component(y - width - gap, 10,  "black", width + gap , x));
+    }
+    for (i = 0; i < myObstacles.length; i += 1) {
+        myObstacles[i].y += -2;
+        myObstacles[i].update();
+		if (myGamePiece.crashWith(myObstacles[i])) {
+            //myGameArea.stop();
+			//return;
+		myGamePiece.speedY = -2;  
+        } 
+    }
+	myScore.text="SCORE: " + myGameArea.frameNo;
+	myScore.update();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+	if (gameover == true)
+	{
+	music.pause();
+	myGameArea.stop();
+	SendmyScore();
+	}
+}
+
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+function SendmyScore() {
+  //var txt;
+  var person = prompt("Please enter your name:", "");
+  if (person == null || person == "") {
+    alert("invade name");
+	SendmyScore();
+  } else {
+  alert(myGameArea.frameNo);
+	$("#player").val(person);
+	$("#score").val(myGameArea.frameNo);
+	$("#submit").click();
+    //txt = "Hello " + person + "! How are you today?";
+	//alert(txt);
+  }
+}
+
+</script>
+<p>use left or right key to escape.</p>
+
+<button onclick="window.location.href='/html.html'">Back to Home</button>
+<form id="myform" method="get" name="Form" action="score.php">
+	<input id="player" type="text" name="player" value="">
+	<input id="score" type="text" name="score" value="">
+	<button id="submit" type="submit" value="send">
+</form>
+</body>
+</html>
